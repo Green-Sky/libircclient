@@ -12,6 +12,9 @@
  * License for more details.
  */
 
+#ifndef INCLUDE_IRC_SOCKET_H
+#define INCLUDE_IRC_SOCKET_H
+
 /*
  * The sockets interface was moved out to simplify going OpenSSL integration.
  */
@@ -159,3 +162,5 @@ static int socket_send (socket_t * sock, const void *buf, size_t len)
 
 	return length;
 }
+
+#endif /* INCLUDE_IRC_SOCKET_H */

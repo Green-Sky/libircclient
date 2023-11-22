@@ -17,9 +17,9 @@
 #define INCLUDE_IRC_SESSION_H
 
 
-#include "params.h"
-#include "dcc.h"
-#include "libirc_events.h"
+#include "./params.h"
+#include "./dcc.h"
+#include "../include/libirc_events.h"
 
 
 // Session flags

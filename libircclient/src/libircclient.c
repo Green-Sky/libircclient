@@ -14,17 +14,19 @@
 
 #define IS_DEBUG_ENABLED(s)	((s)->options & LIBIRC_OPTION_DEBUG)
 
-#include "portable.c"
-#include "sockets.c"
+#include "./portable.h"
+#include "./sockets.h"
 
-#include "libircclient.h"
-#include "session.h"
+#include "../include/libircclient.h"
+#include "./session.h"
 
-#include "utils.c"
-#include "errors.c"
-#include "colors.c"
-#include "dcc.c"
-#include "ssl.c"
+#include "./utils.h"
+/*#include "errors.c"*/
+/*#include "colors.c"*/
+#include "./dcc.h"
+/*#include "dcc.c"*/
+/*#include "ssl.c"*/
+#include "./ssl.h"
 
 
 #ifdef _MSC_VER
@@ -797,11 +799,11 @@ static void libirc_process_incoming_data (irc_session_t * session, size_t proces
 		{
 			; /* ignore this event - not all servers generate this */
 		}
-	 	else
+		else
 	 	{
 			/*
-			 * The "unknown" event is triggered upon receipt of any number of 
-			 * unclassifiable miscellaneous messages, which aren't handled by 
+			 * The "unknown" event is triggered upon receipt of any number of
+			 * unclassifiable miscellaneous messages, which aren't handled by
 			 * the library.
 			 */
 
@@ -816,7 +818,7 @@ int irc_process_select_descriptors (irc_session_t * session, fd_set *in_set, fd_
 {
 	char buf[256], hname[256];
 
-	if ( session->sock < 0 
+	if ( session->sock < 0
 	|| session->state == LIBIRC_STATE_INIT
 	|| session->state == LIBIRC_STATE_DISCONNECTED )
 	{
@@ -833,7 +835,7 @@ int irc_process_select_descriptors (irc_session_t * session, fd_set *in_set, fd_
         // If the socket is not connected yet, wait longer - it is not an error
         if ( !FD_ISSET (session->sock, out_set) )
             return 0;
-        
+
 		// Now we have to determine whether the socket is connected 
 		// or the connect is failed
 		struct sockaddr_storage saddr, laddr;

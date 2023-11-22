@@ -17,11 +17,13 @@ add_library(libircclient
 	./libircclient/src/errors.c
 	./libircclient/src/libircclient.c
 	./libircclient/src/params.h
+	./libircclient/src/portable.h
 	./libircclient/src/portable.c
 	./libircclient/src/session.h
-	./libircclient/src/sockets.c
+	./libircclient/src/sockets.h
+	./libircclient/src/ssl.h
 	./libircclient/src/ssl.c
-	./libircclient/src/utils.c
+	./libircclient/src/utils.h
 )
 
 target_include_directories(libircclient PUBLIC ./libircclient/include)

@@ -12,24 +12,12 @@
  * License for more details.
  */
 
-#include "./portable.h"
+#include "./session.h"
 
-/*
- * Stub for WIN32 dll to initialize winsock API
- */
-#if defined (WIN32_DLL)
-BOOL WINAPI DllMain (HINSTANCE hinstDll, DWORD fdwReason, LPVOID lpvReserved)
-{
-	switch(fdwReason)
-	{
-		case DLL_PROCESS_ATTACH:
-			DisableThreadLibraryCalls (hinstDll);
-			break;
+#ifndef INCLUDE_IRC_SSL_H
+#define INCLUDE_IRC_SSL_H
 
-		case DLL_PROCESS_DETACH:
-			break;
-	}
+int session_socket_read( irc_session_t * session );
+int session_socket_write( irc_session_t * session );
 
-	return TRUE;
-}
-#endif
+#endif /* INCLUDE_IRC_SSL_H */
