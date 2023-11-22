@@ -1,14 +1,14 @@
-/* 
+/*
  * Copyright (C) 2004-2012 George Yunaev gyunaev@ulduzsoft.com
  *
- * This library is free software; you can redistribute it and/or modify it 
- * under the terms of the GNU Lesser General Public License as published by 
- * the Free Software Foundation; either version 3 of the License, or (at your 
+ * This library is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation; either version 3 of the License, or (at your
  * option) any later version.
  *
- * This library is distributed in the hope that it will be useful, but WITHOUT 
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or 
- * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public 
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public
  * License for more details.
  */
 
@@ -18,9 +18,11 @@
 #if !defined (_WIN32)
 	#include <sys/socket.h>
 	#include <netdb.h>
-	#include <arpa/inet.h>	
+	#include <arpa/inet.h>
 	#include <netinet/in.h>
 	#include <fcntl.h>
+	#include <errno.h>
+	#include <unistd.h>
 
 	#define IS_SOCKET_ERROR(a)	((a)<0)
 	typedef int				socket_t;
@@ -99,10 +101,10 @@ static int socket_connect (socket_t * sock, const struct sockaddr *saddr, sockle
 {
 	while ( 1 )
 	{
-	    if ( connect (*sock, saddr, len) < 0 )
-	    {
-	    	if ( socket_error() == EINTR )
-	    		continue;
+		if ( connect (*sock, saddr, len) < 0 )
+		{
+			if ( socket_error() == EINTR )
+				continue;
 
 			if ( socket_error() != EINPROGRESS && socket_error() != EWOULDBLOCK )
 				return 1;
@@ -117,8 +119,8 @@ static int socket_accept (socket_t * sock, socket_t * newsock, struct sockaddr *
 {
 	while ( IS_SOCKET_ERROR(*newsock = accept (*sock, saddr, len)) )
 	{
-    	if ( socket_error() == EINTR )
-    		continue;
+		if ( socket_error() == EINTR )
+			continue;
 
 		return 1;
 	}
@@ -134,7 +136,7 @@ static int socket_recv (socket_t * sock, void * buf, size_t len)
 	while ( (length = recv (*sock, buf, len, 0)) < 0 )
 	{
 		int err = socket_error();
-		
+
 		if ( err != EINTR && err != EAGAIN )
 			break;
 	}
@@ -150,7 +152,7 @@ static int socket_send (socket_t * sock, const void *buf, size_t len)
 	while ( (length = send (*sock, buf, len, 0)) < 0 )
 	{
 		int err = socket_error();
-		
+
 		if ( err != EINTR && err != EAGAIN )
 			break;
 	}
