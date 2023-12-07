@@ -1,7 +1,9 @@
-cmake_minimum_required(VERSION 3.24 FATAL_ERROR)
+cmake_minimum_required(VERSION 3.14...3.24 FATAL_ERROR)
 
 # cmake setup begin
 project(libircclient)
+
+find_package(OpenSSL REQUIRED)
 
 add_library(libircclient
 	./libircclient/include/libircclient.h
@@ -27,4 +29,9 @@ add_library(libircclient
 )
 
 target_include_directories(libircclient PUBLIC ./libircclient/include)
+target_compile_definitions(libircclient PUBLIC ENABLE_SSL=1)
+target_link_libraries(libircclient PUBLIC
+	OpenSSL::SSL
+	#OpenSSL::Crypto
+)
 

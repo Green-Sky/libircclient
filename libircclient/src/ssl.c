@@ -163,7 +163,7 @@ static int ssl_init_context( irc_session_t * session )
 #endif
 
 // Initializes the SSL context. Must be called after the socket is created.
-static int ssl_init( irc_session_t * session )
+int ssl_init( irc_session_t * session )
 {
 	static int ssl_context_initialized = 0;
 

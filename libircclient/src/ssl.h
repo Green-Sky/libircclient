@@ -20,4 +20,6 @@
 int session_socket_read( irc_session_t * session );
 int session_socket_write( irc_session_t * session );
 
+int ssl_init( irc_session_t * session );
+
 #endif /* INCLUDE_IRC_SSL_H */
