@@ -35,3 +35,7 @@ target_link_libraries(libircclient PUBLIC
 	#OpenSSL::Crypto
 )
 
+if(WIN32)
+	target_link_libraries(libircclient PUBLIC ws2_32 iphlpapi)
+endif()
+
